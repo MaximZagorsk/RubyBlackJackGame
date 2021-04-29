@@ -1,12 +1,13 @@
 require_relative 'card'
 
-#Класс колоды
+# Класс колоды
 class Deck
-  #Метод для чтения и записи колоды
+  # Метод для чтения и записи колоды
   attr_accessor :deck
 
   def initialize
     @deck = []
+    create_deck
   end
 
   # Метод, который создает массив карт в колоде
