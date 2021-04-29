@@ -20,4 +20,11 @@ class Deck
       end
     end
   end
+
+  # Метод передачи карты случайной карты игроку в руку
+  def give_a_card(player)
+    card = @deck.sample
+    player.take_a_card(card)
+    @deck.delete(card)
+  end
 end
