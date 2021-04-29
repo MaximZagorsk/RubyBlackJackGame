@@ -1,10 +1,15 @@
 require_relative 'card'
 
+#Класс колоды
 class Deck
+  #Метод для чтения и записи колоды
+  attr_accessor :deck
+
   def initialize
     @deck = []
   end
 
+  # Метод, который создает массив карт в колоде
   def create_deck
     suit_list = ['+', '<3', '^', '<>']
     number_with_value = { '2' => 2, '3' => 3, '4' => 4, '5' => 5, '6' => 6, '7' => 7, '8' => 8,
