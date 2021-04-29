@@ -2,6 +2,7 @@
 class Card
   attr_reader :suit, :number, :value
 
+  # Инициализация масти, номинала карты, значение
   def initialize(suit, number, value)
     @suit = suit
     @number = number

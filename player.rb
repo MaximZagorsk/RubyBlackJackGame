@@ -8,4 +8,9 @@ class Player
     # Переменная руки
     @hand = []
   end
+
+  # Метод, который кладет карту в руку
+  def take_a_card(card)
+    @hand.push(card)
+  end
 end
