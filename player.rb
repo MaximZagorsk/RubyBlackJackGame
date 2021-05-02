@@ -1,7 +1,7 @@
 # Класс игрока
 class Player
   # attr_accessor для чтения и записи карт
-  attr_accessor :hand
+  attr_accessor :hand, :cash
 
   def initialize(name)
     @name = name
@@ -15,22 +15,28 @@ class Player
     @hand.push(card)
   end
 
+  # Метод для подсчета очков
   def score
-    score = 0
-    card_a ||= nil
+    @score = 0
+    card_a ||= 0
     @hand.each do |card|
       if card.number == 'A'
-        card_a = card
+        card_a += 1
       else
-        score += card.value
+        @score += card.value
       end
     end
-    unless card_a.nil?
-      score += if score + 11 > 21
-                 1
-               else
-                 11
-               end
+    case card_a
+    when 1
+      @score += if @score + 11 > 21
+                  1
+                else
+                  11
+                end
+    when 2
+      @score += 2
+    when 3
+      @score = 13
     end
   end
 end
