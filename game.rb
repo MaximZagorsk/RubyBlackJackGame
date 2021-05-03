@@ -20,7 +20,6 @@ class Game
     @bank += 20
     @player.cash -= 10
     @player.cash -= 10
-    @bank += 20
     2.times do
       @deck.give_a_card(@player)
       @deck.give_a_card(@diller)
@@ -28,15 +27,15 @@ class Game
   end
 
   def check_winner
-    if @player.score > @diller.score
+    if (@player.score > @diller.score) && @player.score <= 21
       @player.cash += @bank
       @bank -= @bank
       @player.name
-    elsif @player.score < @diller.score
+    elsif (@player.score < @diller.score) && @diller.score <= 21
       @diller.cash += @bank
       @bank -= @bank
       @diller.name
-    elsif @player.score == @diller.score
+    elsif (@player.score == @diller.score) || (@diller.score > 21 && @player.score > 21)
       @player.cash += 10
       @diller.cash += 10
       @bank -= @bank
@@ -46,7 +45,8 @@ class Game
 
   def end_round
     if (@player.hand.length == 3) and (@diller.hand.length == 3)
-      true
+      check_winner
+
     end
   end
 end
