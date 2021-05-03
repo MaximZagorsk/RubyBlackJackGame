@@ -1,7 +1,7 @@
 # Класс игрока
 class Player
   # attr_accessor для чтения и записи карт
-  attr_accessor :hand, :cash
+  attr_accessor :hand, :cash, :name
 
   def initialize(name)
     @name = name
@@ -38,5 +38,6 @@ class Player
     when 3
       @score = 13
     end
+    @score
   end
 end
