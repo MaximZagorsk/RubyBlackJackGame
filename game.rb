@@ -16,7 +16,9 @@ class Game
   end
 
   # Метод для начала партии, который кладет игрокам в руку по две карты
-  def start_game
+  def start_round
+    @player.hand.clear
+    @diller.hand.clear
     @bank += 20
     @player.cash -= 10
     @player.cash -= 10
@@ -43,10 +45,12 @@ class Game
     end
   end
 
-  def end_round
+  def end_round?
     if (@player.hand.length == 3) and (@diller.hand.length == 3)
       check_winner
-
+      true
+    else
+      false
     end
   end
 end
