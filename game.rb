@@ -1,5 +1,7 @@
 # Класс игры
 class Game
+  attr_reader :bank
+
   def initialize
     @table = []
     @bank = 0

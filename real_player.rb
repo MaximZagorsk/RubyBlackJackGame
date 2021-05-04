@@ -7,7 +7,6 @@ class RealPlayer < Player
     case input
     when '1'
       if @hand.length < 3
-        puts "длина руки #{@hand.length}"
         deck.give_a_card(self)
       end
       'Pass'
