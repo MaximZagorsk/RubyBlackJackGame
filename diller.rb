@@ -7,6 +7,7 @@ class Diller < Player
     super
   end
 
+  # Метод шага диллера
   def diller_step(deck)
     if score <= 17 && @hand.length < 3
       deck.give_a_card(self)
