@@ -29,6 +29,7 @@ class Game
     end
   end
 
+  # Метод проверки и вывода победителя
   def check_winner
     if (@player.score > @diller.score) && (@player.score <= 21)
       @player.cash += @bank
@@ -54,6 +55,7 @@ class Game
     end
   end
 
+  # Метод проверки конца раунда
   def end_round?(player_step)
     if (@player.hand.length == 3) && (@diller.hand.length == 3)
       true

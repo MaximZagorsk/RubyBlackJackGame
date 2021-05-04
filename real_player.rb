@@ -1,6 +1,8 @@
 require_relative 'player'
 # Класс игрока
 class RealPlayer < Player
+
+  # Метод шага игрока
   def player_step(deck, input)
     case input
     when '1'

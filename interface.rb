@@ -4,10 +4,12 @@ require_relative 'diller'
 require_relative 'deck'
 require_relative 'card'
 
+# Класс интерфейса
 class Interface
+  # Функция меню игры
   def start_game
     loop do
-      puts "1. Начать игру \n 2. Правила \n 3. Выход"
+      puts "1. Начать игру \n2. Правила \n3. Выход"
       user_input = gets.chomp
       case user_input
       when '1'
@@ -20,6 +22,7 @@ class Interface
     end
   end
 
+  # Функция старта партии
   def start
     diller = Diller.new
     username_input = gets.chomp
@@ -31,9 +34,39 @@ class Interface
       game.start_round
       round(player, diller, game, deck)
       puts "\nКонец раунда"
+      if player.cash.zero?
+        puts 'Вы проиграли'
+        if continue_game?
+          player.cash = 100
+          diller.cash = 100
+        else
+          break
+        end
+      elsif diller.cash.zero?
+        puts 'Вы выиграли!'
+        if continue_game?
+          player.cash = 100
+          diller.cash = 100
+        else
+          break
+        end
+      end
     end
   end
 
+  # Функция для продолжения или выхода из игры
+  def continue_game?
+    puts 'Хотите продолжить игру? Введите [Y/N]'
+    input_user = gets.chomp.downcase!
+    case input_user
+    when 'y'
+      true
+    when 'n'
+      false
+    end
+  end
+
+  # Функция партии игры
   def round(player, diller, game, deck)
     loop do
       puts "\nКошелек игрока: #{player.cash}"
@@ -45,7 +78,7 @@ class Interface
       if game.end_round?(player_step)
         hand_player_output(player)
         hand_player_output(diller, false)
-        puts "Победиль: #{game.check_winner}"
+        puts "Победитель: #{game.check_winner}"
         break
       else
         puts "Ход диллера: #{diller.diller_step(deck)}"
@@ -53,6 +86,7 @@ class Interface
     end
   end
 
+  # Функция вывода информации о содержании руки игрока
   def hand_player_output(player, hidden = false)
     card_output = []
     player.hand.each do |card|
