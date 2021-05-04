@@ -29,19 +29,39 @@ class Interface
     game.create_table(player, diller, deck)
     loop do
       game.start_round
-      puts player.cash
-      puts 'Введите действие 1 - взять карту, 2 пропустить ход, вскрыть карты'
+      round(player, diller, game, deck)
+      puts "\nКонец раунда"
+    end
+  end
+
+  def round(player, diller, game, deck)
+    loop do
+      puts "\nКошелек игрока: #{player.cash}"
+      hand_player_output(player)
+      hand_player_output(diller, true)
+      puts 'Введите действие 1 - взять карту, 2 - пропустить ход, 3-вскрыть карты'
       player_input = gets.chomp
       player_step = player.player_step(deck, player_input)
-      puts player.score
-      puts diller.score
-      diller.diller_step(deck)
-      if game.end_round?
+      if game.end_round?(player_step)
+        hand_player_output(player)
+        hand_player_output(diller, false)
+        puts "Победиль: #{game.check_winner}"
         break
-      elsif player_step == 'Open cards'
-        game.check_winner
-        break
+      else
+        puts "Ход диллера: #{diller.diller_step(deck)}"
       end
+    end
+  end
+
+  def hand_player_output(player, hidden = false)
+    card_output = []
+    player.hand.each do |card|
+      card_output.push(card.number + card.suit)
+    end
+    if hidden
+      puts "Карты #{player.name}: #{'*' * card_output.length}"
+    else
+      puts "Карты #{player.name}: #{card_output[0]}, #{card_output[1]}, #{card_output[2]}"
     end
   end
 end
