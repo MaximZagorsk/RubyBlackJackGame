@@ -17,11 +17,12 @@ class Game
 
   # Метод для начала партии, который кладет игрокам в руку по две карты
   def start_round
+    @deck.deck += @player.hand + @diller.hand
     @player.hand.clear
     @diller.hand.clear
     @bank += 20
     @player.cash -= 10
-    @player.cash -= 10
+    @diller.cash -= 10
     2.times do
       @deck.give_a_card(@player)
       @deck.give_a_card(@diller)
@@ -29,11 +30,11 @@ class Game
   end
 
   def check_winner
-    if (@player.score > @diller.score) && @player.score <= 21
+    if (@player.score > @diller.score) && (@player.score <= 21)
       @player.cash += @bank
       @bank -= @bank
       @player.name
-    elsif (@player.score < @diller.score) && @diller.score <= 21
+    elsif (@player.score < @diller.score) && (@diller.score <= 21)
       @diller.cash += @bank
       @bank -= @bank
       @diller.name
@@ -41,16 +42,23 @@ class Game
       @player.cash += 10
       @diller.cash += 10
       @bank -= @bank
-      "Ничья"
+      'Ничья'
+    elsif (@player.score < @diller.score) && (@diller.score > 21)
+      @player.cash += @bank
+      @bank -= @bank
+      @player.name
+    elsif (@diller.score < @player.score) && (@player.score > 21)
+      @diller.cash += @bank
+      @bank -= @bank
+      @diller.name
     end
   end
 
-  def end_round?
-    if (@player.hand.length == 3) and (@diller.hand.length == 3)
-      check_winner
+  def end_round?(player_step)
+    if (@player.hand.length == 3) && (@diller.hand.length == 3)
       true
     else
-      false
+      player_step == 'Open cards'
     end
   end
 end

@@ -1,11 +1,13 @@
 require_relative 'player'
 # Класс игрока
 class RealPlayer < Player
-  def player_step(deck,input)
+  def player_step(deck, input)
     case input
-    when '1' && @hand.length < 3
-      deck.give_a_card(self)
-    when '2'
+    when '1'
+      if @hand.length < 3
+        puts "длина руки #{@hand.length}"
+        deck.give_a_card(self)
+      end
       'Pass'
     when '3'
       'Open cards'
