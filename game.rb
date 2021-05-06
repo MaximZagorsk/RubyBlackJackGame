@@ -33,24 +33,24 @@ class Game
 
   # Метод проверки и вывода победителя
   def check_winner
-    if (@player.score > @dealer.score) && (@player.score <= 21)
+    if (@player.hand.score > @dealer.hand.score) && (@player.hand.score <= 21)
       @player.cash += @bank
       @bank -= @bank
       @player
-    elsif (@player.score < @dealer.score) && (@dealer.score <= 21)
+    elsif (@player.hand.score < @dealer.hand.score) && (@dealer.hand.score <= 21)
       @dealer.cash += @bank
       @bank -= @bank
       @dealer
-    elsif (@player.score == @dealer.score) || (@dealer.score > 21 && @player.score > 21)
+    elsif (@player.hand.score == @dealer.hand.score) || (@dealer.hand.score > 21 && @player.hand.score > 21)
       @player.cash += 10
       @dealer.cash += 10
       @bank -= @bank
       nil
-    elsif (@player.score < @dealer.score) && (@dealer.score > 21)
+    elsif (@player.hand.score < @dealer.hand.score) && (@dealer.hand.score > 21)
       @player.cash += @bank
       @bank -= @bank
       @player
-    elsif (@dealer.score < @player.score) && (@player.score > 21)
+    elsif (@dealer.hand.score < @player.hand.score) && (@player.hand.score > 21)
       @dealer.cash += @bank
       @bank -= @bank
       @dealer
@@ -59,7 +59,7 @@ class Game
 
   # Метод проверки конца раунда
   def end_round?(player_step)
-    if (@player.hand.length == 3) && (@dealer.hand.length == 3)
+    if (@player.hand.cards.length == 3) && (@dealer.hand.cards.length == 3)
       true
     else
       player_step == 'Open cards'

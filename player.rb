@@ -12,6 +12,6 @@ class Player
 
   # Метод, который кладет карту в руку
   def take_a_card(card)
-    @hand.push(card)
+    @hand.put_card(card)
   end
 end

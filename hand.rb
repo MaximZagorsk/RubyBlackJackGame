@@ -1,4 +1,6 @@
 class Hand
+  attr_reader :cards
+
   def initialize
     @cards = []
   end
@@ -6,7 +8,7 @@ class Hand
   def score
     @score = 0
     card_a ||= 0
-    @hand.each do |card|
+    @cards.each do |card|
       if card.number == 'A'
         card_a += 1
       else
@@ -26,5 +28,9 @@ class Hand
       @score = 13
     end
     @score
+  end
+
+  def put_card(card)
+    @cards.push(card) if @cards.length < 3
   end
 end
