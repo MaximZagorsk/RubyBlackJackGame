@@ -19,9 +19,10 @@ class Game
 
   # Метод для начала партии, который кладет игрокам в руку по две карты
   def start_round
-    @deck.deck += @player.hand + @dealer.hand
-    @player.hand.clear
-    @dealer.hand.clear
+    @deck.deck += @player.hand.cards + @dealer.hand.cards
+    @player.hand.cards.clear
+    @dealer.hand.cards.clear
+    @deck.shuffle
     @bank += 20
     @player.cash -= 10
     @dealer.cash -= 10
@@ -64,5 +65,18 @@ class Game
     else
       player_step == 'Open cards'
     end
+  end
+
+  def winner
+    if @player.cash.zero?
+      @dealer
+    elsif @dealer.cash.zero?
+      @player
+    end
+  end
+
+  def continue_game
+    @player.cash = 100
+    @dealer.cash = 100
   end
 end

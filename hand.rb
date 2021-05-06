@@ -31,6 +31,6 @@ class Hand
   end
 
   def put_card(card)
-    @cards.push(card) if @cards.length < 3
+    @cards.push(card)
   end
 end

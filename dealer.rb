@@ -9,7 +9,7 @@ class Dealer < Player
 
   # Метод шага дилера
   def dealer_step(deck)
-    if score <= 17 && @cards.length < 3
+    if hand.score <= 17 && @hand.cards.length < 3
       deck.give_a_card(self)
       true
     else

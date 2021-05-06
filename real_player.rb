@@ -5,8 +5,7 @@ class RealPlayer < Player
   def player_step(deck, input)
     case input
     when '1'
-      deck.give_a_card(self) if @cards.length < 3
-      'Pass'
+      deck.give_a_card(self) if hand.cards.length < 3
     when '3'
       'Open cards'
     else

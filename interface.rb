@@ -3,6 +3,7 @@ require_relative 'real_player'
 require_relative 'dealer'
 require_relative 'deck'
 require_relative 'card'
+require_relative 'hand'
 
 # Класс интерфейса
 class Interface
@@ -37,32 +38,20 @@ class Interface
       game.start_round
       round(player, dealer, game, deck)
       puts "\nКонец раунда"
-      if player.cash.zero?
-        puts 'Вы проиграли'
-        if continue_game?
-          player.cash = 100
-          dealer.cash = 100
-        else
-          break
-        end
-      elsif dealer.cash.zero?
-        puts 'Вы выиграли!'
-        if continue_game?
-          player.cash = 100
-          dealer.cash = 100
-        else
-          break
-        end
+      if player.cash.zero? || dealer.cash.zero?
+        puts "Победил #{game.winner.name}"
+        break unless continue_game?(game)
       end
     end
   end
 
   # Метод для продолжения или выхода из игры
-  def continue_game?
+  def continue_game?(game)
     puts 'Хотите продолжить игру? Введите [Y/N]'
     input_user = gets.chomp.downcase
     case input_user
     when 'y'
+      game.continue_game
       true
     when 'n'
       false
@@ -83,7 +72,7 @@ class Interface
       if game.end_round?(player_step)
         hand_player_output(player)
         hand_player_output(dealer, false)
-        puts "Победитель: #{game.check_winner}"
+        puts "Победитель: #{output_winner(game)}"
         break
       else
         puts "Ход диллера: #{dealer.dealer_step(deck)}"
@@ -91,10 +80,18 @@ class Interface
     end
   end
 
+  def output_winner(game)
+    if game.check_winner.nil?
+      'Ничья'
+    else
+      game.check_winner.name
+    end
+  end
+
   # Метод вывода информации о содержании руки игрока
   def hand_player_output(player, hidden = false)
     card_output = []
-    player.hand.each do |card|
+    player.hand.cards.each do |card|
       card_output.push(card.number + card.suit)
     end
     if hidden

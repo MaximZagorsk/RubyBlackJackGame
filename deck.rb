@@ -17,7 +17,6 @@ class Deck < Card
         @deck.push(Card.new(suit, number, value))
       end
     end
-    shuffle
   end
 
   # Метод передачи карты случайной карты игроку в руку
