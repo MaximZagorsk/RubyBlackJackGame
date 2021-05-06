@@ -11,9 +11,9 @@ class Dealer < Player
   def dealer_step(deck)
     if score <= 17 && @hand.length < 3
       deck.give_a_card(self)
-      'Take a card'
+      true
     else
-      'Pass'
+      false
     end
   end
 end

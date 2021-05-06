@@ -27,7 +27,7 @@ class Interface
   # Функция старта партии
   def start
     dealer = Dealer.new
-    puts "Введите имя игрока:"
+    puts 'Введите имя игрока:'
     username_input = gets.chomp
     player = RealPlayer.new username_input
     game = Game.new
