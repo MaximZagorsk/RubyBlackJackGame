@@ -1,7 +1,7 @@
 require_relative 'card'
 
 # Класс колоды
-class Deck < Card
+class Deck
   # Метод для чтения и записи колоды
   attr_accessor :deck
 
@@ -12,8 +12,8 @@ class Deck < Card
 
   # Метод, который создает массив карт в колоде
   def create_deck
-    CARD_SUIT.each do |suit|
-      CARD_NUMBER_VALUE.each do |number, value|
+    Card::CARD_SUIT.each do |suit|
+      Card::CARD_NUMBER_VALUE.each do |number, value|
         @deck.push(Card.new(suit, number, value))
       end
     end
