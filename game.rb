@@ -3,7 +3,6 @@ class Game
   attr_reader :bank
 
   def initialize
-    @table = []
     @bank = 0
     @player = nil
     @dealer = nil
@@ -33,28 +32,69 @@ class Game
   end
 
   # Метод проверки и вывода победителя
+  # def check_winner
+  #   if (@player.hand.score > @dealer.hand.score) && (@player.hand.score <= 21)
+  #     @player.cash += @bank
+  #     @bank -= @bank
+  #     @player
+  #   elsif (@player.hand.score < @dealer.hand.score) && (@dealer.hand.score <= 21)
+  #     @dealer.cash += @bank
+  #     @bank -= @bank
+  #     @dealer
+  #   elsif (@player.hand.score == @dealer.hand.score) || (@dealer.hand.score > 21 && @player.hand.score > 21)
+  #     @player.cash += 10
+  #     @dealer.cash += 10
+  #     @bank -= @bank
+  #     nil
+  #   elsif (@player.hand.score < @dealer.hand.score) && (@dealer.hand.score > 21)
+  #     @player.cash += @bank
+  #     @bank -= @bank
+  #     @player
+  #   elsif (@dealer.hand.score < @player.hand.score) && (@player.hand.score > 21)
+  #     @dealer.cash += @bank
+  #     @bank -= @bank
+  #     @dealer
+  #   end
+  # end
+
   def check_winner
-    if (@player.hand.score > @dealer.hand.score) && (@player.hand.score <= 21)
-      @player.cash += @bank
-      @bank -= @bank
-      @player
-    elsif (@player.hand.score < @dealer.hand.score) && (@dealer.hand.score <= 21)
-      @dealer.cash += @bank
-      @bank -= @bank
-      @dealer
-    elsif (@player.hand.score == @dealer.hand.score) || (@dealer.hand.score > 21 && @player.hand.score > 21)
-      @player.cash += 10
+    if check_overflow.nil?
+      round_winner(check_score)
+    else
+      round_winner(check_overflow)
+    end
+  end
+
+  def round_winner(winner)
+    if winner == true
       @dealer.cash += 10
+      @player.cash += 10
       @bank -= @bank
       nil
-    elsif (@player.hand.score < @dealer.hand.score) && (@dealer.hand.score > 21)
-      @player.cash += @bank
+    else
+      winner.cash += @bank
       @bank -= @bank
+      winner
+    end
+  end
+
+  def check_score
+    if @player.hand.score > @dealer.hand.score
       @player
-    elsif (@dealer.hand.score < @player.hand.score) && (@player.hand.score > 21)
-      @dealer.cash += @bank
-      @bank -= @bank
+    elsif @player.hand.score < @dealer.hand.score
       @dealer
+    elsif @player.hand.score == @dealer.hand.score
+      true
+    end
+  end
+
+  def check_overflow
+    if @player.hand.score > 21
+      @dealer
+    elsif @dealer.hand.score > 21
+      @player
+    elsif @dealer.hand.score > 21 && @player.hand.score > 21
+      true
     end
   end
 

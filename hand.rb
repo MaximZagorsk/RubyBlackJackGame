@@ -15,6 +15,11 @@ class Hand
         @score += card.value
       end
     end
+    score_with_a(card_a)
+    @score
+  end
+
+  def score_with_a(card_a)
     case card_a
     when 1
       @score += if @score + 11 > 21
@@ -27,7 +32,6 @@ class Hand
     when 3
       @score = 13
     end
-    @score
   end
 
   def put_card(card)
